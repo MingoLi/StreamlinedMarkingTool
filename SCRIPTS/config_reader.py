@@ -9,10 +9,8 @@ class config_reader:
         # Load the configuration file
         with open("CONFIGURATION/config.ini") as f:
             sample_config = f.read()
-
             self.parser = ConfigParser(interpolation=ExtendedInterpolation())
             self.parser.readfp(io.BytesIO(sample_config))
-
 
     def get_assignemnts(self):
         return self.parser.get('paths', 'assignments_dir')
@@ -30,8 +28,8 @@ class config_reader:
 
 
 
-cr = config_reader()
-print(cr.get_assignemnts())
+# cr = config_reader()
+# print(cr.get_assignemnts())
 
 # List all contents
 # print("List all contents")
