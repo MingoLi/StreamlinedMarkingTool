@@ -7,7 +7,7 @@ class config_reader:
 
     def __init__(self):
         # Load the configuration file
-        with open("CONFIGURATION/config.ini") as f:
+        with open("../CONFIGURATION/config.ini") as f:
             sample_config = f.read()
             self.parser = ConfigParser(interpolation=ExtendedInterpolation())
             self.parser.readfp(io.BytesIO(sample_config))

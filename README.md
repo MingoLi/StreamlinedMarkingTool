@@ -2,9 +2,9 @@
 This project is looking to streamline the marking process by using Python on Linux. A command-line tool will be introduced, where the marker can view the student’s files, run the code, view the output. Unit tests will be supported and can be accessed from a configurable location. As a result, a CSV file will be produced listing the student’s marks, and other related information.
 
 # How to run
-In shell, type `python shell.py` to start
+Find `shell.py` in `SCRIPTS`, type `python shell.py` to start
 - Linux commands are still available by adding `!` before the command, e.g. `!ls`
-- Frequently used commands can be executed without `!`, including `ls`, `cd`
+- Frequently used commands can be executed without `!`, including `ls`, `cd`, `pwd`
 
 # Function achieved
 - Configuration reader
@@ -17,7 +17,12 @@ In shell, type `python shell.py` to start
     - Will automatically generate a dictionary `<id, submition date>` object based on the `HANDIN_LOG`
 - `Help` for commands
     - shortcuts: `?<cmd_name>`, e.g. `?pd`
+- If a makefile is contained in assignment folder, `make` can be used to compile the source code
+    - `make` will search for makefile and compile accordingly, more info in `help make`
 
+# Yet to be finished
+- automat compile
+- diff output and sample solution
 
 # Open source used:  
 - cmd2    
