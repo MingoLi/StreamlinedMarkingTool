@@ -1,5 +1,5 @@
 from datetime import datetime
-import config_reader as cr
+from config_reader import config_reader
 TIME_STAMP = 'Time Stamp: '
 SUBMITTER = 'Submitter: '
 
@@ -7,8 +7,11 @@ class late_submit_checker:
     handin_log = {}
     late_submitter = {}
 
+    def __init__(self):
+        self.cr = config_reader()
+
     def read_handinlog(self):
-        assignment_dir = cr.get_assignemnts()
+        assignment_dir = self.cr.get_assignemnts()
         
         with open(assignment_dir+'/HANDIN_LOG') as fobj:
             lines = fobj.readlines()
@@ -30,7 +33,7 @@ class late_submit_checker:
         if len(self.handin_log) == 0:
             self.read_handinlog()
             
-        deadline = datetime.strptime(cr.get_deadline(), '%a %b %d %H:%M:%S %Y')
+        deadline = datetime.strptime(self.cr.get_deadline(), '%a %b %d %H:%M:%S %Y')
 
         for uom_id, date in self.handin_log.items():
             if date > deadline:

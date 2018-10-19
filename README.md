@@ -17,11 +17,13 @@ Find `shell.py` in `SCRIPTS`, type `python shell.py` to start
     - Will automatically generate a dictionary `<id, submition date>` object based on the `HANDIN_LOG`
 - `Help` for commands
     - shortcuts: `?<cmd_name>`, e.g. `?pd`
-- If a makefile is contained in assignment folder, `make` can be used to compile the source code
+- Automate compilation: if a makefile is contained in assignment folder, `make` can be used to compile the source code
     - `make` will search for makefile and compile accordingly, more info in `help make`
+    - `-r` is supported to compile the sub-directory recursively
+- `next` and `prev` helps you navigate between student's assignment folder
 
 # Yet to be finished
-- automat compile
+- Track the grading progress and be able to resume
 - diff output and sample solution
 
 # Open source used:  

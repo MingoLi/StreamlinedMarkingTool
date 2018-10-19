@@ -34,6 +34,24 @@ class Shell(cmd2.Cmd):
         print(self.cr.get_file_location(location))
         pass
 
+    def do_next(self, *args):
+        """Move to the next student's assignment folder
+
+        Note: if you are in ASSIGNMENTS root directory, next will cd to the first available directory
+
+        """
+        self.utility.move_to_next_directory(self.cr.get_assignemnts())
+        print('cd: ' + os.getcwd())
+        pass
+
+    def do_prev(self, *args):
+        """Move to the previous student's assignment folder
+
+        Note: if you are in ASSIGNMENTS root directory, prev will cd to the first available directory
+        """
+        self.utility.move_to_prev_directory(self.cr.get_assignemnts())
+        print('cd: ' + os.getcwd())
+        pass
 
     compile_parser = argparse.ArgumentParser()
     compile_parser.add_argument('-r', '--recursive', action='store_true', help='compile the subdirectory recursively')
