@@ -25,6 +25,10 @@ Find `shell.py` in `SCRIPTS`, type `python shell.py` to start
 # Yet to be finished
 - Track the grading progress and be able to resume
 - diff output and sample solution
+- Given feedback with pre-defined marking sentences or using -m argument
+- grades statistics
+- Email notification
+- 
 
 # Open source used:  
 - cmd2    
