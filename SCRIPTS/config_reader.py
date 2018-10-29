@@ -15,9 +15,13 @@ class config_reader:
     def get_assignemnts(self):
         return self.parser.get('paths', 'assignments_dir')
 
+    def get_unit_test(self):
+        return self.parser.get('paths', 'unit_test_dir')
+
     def get_file_location(self, location):
         switcher = {
             'assignments':self.get_assignemnts(),
+            'unit tests':self.get_unit_test(),
         }
         # print(switcher.get(location))
         return switcher.get(location)

@@ -24,14 +24,15 @@ Find `shell.py` in `SCRIPTS`, type `python shell.py` to start
 - `next` and `prev` helps you navigate between student's assignment folder
 - Run executable through command `run`
     - e.g. `run ./a.out`
+- Unit test with given input file and expected output. 
+    - More details on command `test`
+    - e.g. `test <program> <input.txt> [-c]`
 
 # Yet to be finished
 - Track the grading progress and be able to resume
-- diff output and sample solution
 - Given feedback with pre-defined marking sentences or using -m argument
 - grades statistics
 - Email notification
-- 
 
 # Open source used:  
 - cmd2    

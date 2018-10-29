@@ -70,6 +70,30 @@ class utility:
                 os.chdir(assignment_dir + '/' + assignment_dir_list[dir_index-1])
         pass
 
+    def unit_test(self, exe, testfile, context):
+        import subprocess, difflib
+        expected = self.parse_test_filename(testfile)
+        out = subprocess.check_output([exe, testfile])
+        out = out.splitlines() 
+        with open(expected) as f:
+            
+            if context:
+                diff = difflib.context_diff(out, f.read().splitlines())
+            else:
+                # diff = difflib.ndiff(out, f.read().splitlines())
+                # diff = difflib.unified_diff(out, f.read().splitlines())
+                d = difflib.Differ()
+                diff = d.compare(out, f.read().splitlines())
+        print '\n'.join(diff)
+
+
+    def parse_test_filename(self, filename):
+        if filename.endswith('.txt'):
+            return_name = filename[:-4] + '_expected.txt'
+        else:
+            return_name = filename + '_expected'
+        
+        return return_name
 
 
 

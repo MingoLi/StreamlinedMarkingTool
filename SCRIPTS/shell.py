@@ -53,6 +53,21 @@ class Shell(cmd2.Cmd):
         print('cd: ' + os.getcwd())
         pass
 
+
+    argparser_test = argparse.ArgumentParser(epilog='input unit test files are placed under UNIT TESTS folder, and the files contain their corresponding expeceted output should be named as [filename]_expected plus extension')
+    argparser_test.add_argument('exe', help='executable name')
+    argparser_test.add_argument('input', help='unit test input filename')
+    argparser_test.add_argument('-c', '--context', action='store_true', help='show the diff with context of both file')
+    @cmd2.with_argparser(argparser_test)
+    def do_test(self, args):
+        """Run unit test on executable file, compare the output with pre-defined expecteed output.
+        """
+        inputfile_path = self.cr.get_unit_test() + '/' + args.input
+        exe_path = os.getcwd() + '/' + args.exe
+        self.utility.unit_test(exe_path, inputfile_path, args.context)
+        pass
+
+
     compile_parser = argparse.ArgumentParser()
     compile_parser.add_argument('-r', '--recursive', action='store_true', help='compile the subdirectory recursively')
     @cmd2.with_argparser(compile_parser)
@@ -89,8 +104,13 @@ class Shell(cmd2.Cmd):
         return True
 
     def do_run(self, args):
-        os.system(args)
-
+        """Run executable file with given arguments.
+        """
+        from subprocess import call
+        argv = args.split()
+        if not argv[0].startswith('./'):
+            argv[0] = './' + argv[0]
+        call(argv)
 
     # short cut for commands
     do_pd = do_print_dir
