@@ -74,7 +74,7 @@ class Shell(cmd2.Cmd):
 
 
     def do_ls(self, path):
-        os.system('ls' + path)
+        os.system('ls ' + path)
         pass
 
     def do_cd(self, path):
@@ -87,6 +87,9 @@ class Shell(cmd2.Cmd):
 
     def do_exit(self, *args):
         return True
+
+    def do_run(self, args):
+        os.system(args)
 
 
     # short cut for commands

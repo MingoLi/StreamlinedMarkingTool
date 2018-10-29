@@ -74,6 +74,7 @@ class utility:
 
 
 # u = utility()
+# u.run_executable()
 # u.compile_through_makefile('/Users/mingo/Desktop/StreamlinedMarkingTool/ASSIGNMENTS/lim34521', False)   
 # cr = config_reader()
 # assignment_dir = cr.get_assignemnts()
