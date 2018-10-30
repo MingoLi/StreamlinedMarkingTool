@@ -25,12 +25,14 @@ Find `shell.py` in `SCRIPTS`, type `python shell.py` to start
 - Run executable through command `run`
     - e.g. `run ./a.out`
 - Unit test with given input file and expected output. 
-    - More details on command `test`
+    - More details on command `?test`
     - e.g. `test <program> <input.txt> [-c]`
+- Leave feedback to students using pre-define sentences. 
+    - e,g. `fd <feedback> <mark deduction>`
+    - `fdlist` to list all avaliable abbreviation for feedback sentences
 
 # Yet to be finished
 - Track the grading progress and be able to resume
-- Given feedback with pre-defined marking sentences or using -m argument
 - grades statistics
 - Email notification
 

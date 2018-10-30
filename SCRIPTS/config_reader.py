@@ -8,15 +8,22 @@ class config_reader:
     def __init__(self):
         # Load the configuration file
         with open("../CONFIGURATION/config.ini") as f:
-            sample_config = f.read()
+            config = f.read()
             self.parser = ConfigParser(interpolation=ExtendedInterpolation())
-            self.parser.readfp(io.BytesIO(sample_config))
+            self.parser.readfp(io.BytesIO(config))
 
     def get_assignemnts(self):
         return self.parser.get('paths', 'assignments_dir')
 
     def get_unit_test(self):
         return self.parser.get('paths', 'unit_test_dir')
+    
+    def get_rubrics(self):
+        return self.parser['rubric']
+
+    def get_feedback(self):
+        return self.parser.get('paths', 'feedback_dir')
+    
 
     def get_file_location(self, location):
         switcher = {

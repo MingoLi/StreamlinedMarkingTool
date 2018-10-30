@@ -3,6 +3,7 @@ import cmd2
 import argparse
 from config_reader import config_reader
 from utility import utility
+from feedback import feedback
 import os
 
 
@@ -13,6 +14,7 @@ class Shell(cmd2.Cmd):
         cmd2.Cmd.__init__(self)
         self.cr = config_reader()
         self.utility = utility()
+        self.feedback = feedback()
         os.chdir('../ASSIGNMENTS')
 
     # def do_loadaverage(self, line):
@@ -88,6 +90,26 @@ class Shell(cmd2.Cmd):
         pass 
 
 
+    argparser_feedback = argparse.ArgumentParser()
+    # argparser_feedback.add_argument('-m', '--message', type=str, help='use customized feedback sentence')
+    # argparser_feedback.add_argument('-d', '--deduct', type=int, help='marks to be deducted')
+    argparser_feedback.add_argument('feedback', help='use feedback abbreviations defined in config file')
+    argparser_feedback.add_argument('deduct', help='marks to be deducted')
+    @cmd2.with_argparser(argparser_feedback)
+    def do_feedback(self, args):
+        """Leave feedback to current student. Feedbacks are stored in FEEDBACK/feedback.ini, and will be used to generate email template"""
+        print args.feedback + ': ' + args.deduct
+        self.feedback.leave_feedback(args.feedback, args.deduct)
+        pass
+
+
+    def do_feedbacklist(self, args):
+        """List all available feedback sentences"""
+        self.feedback.print_all_rubric()
+        pass
+    
+    
+
     def do_ls(self, path):
         os.system('ls ' + path)
         pass
@@ -115,6 +137,8 @@ class Shell(cmd2.Cmd):
     # short cut for commands
     do_pd = do_print_dir
     do_make = do_compile
+    do_fd = do_feedback
+    do_fdlist = do_feedbacklist
 
 
 if __name__ == '__main__':

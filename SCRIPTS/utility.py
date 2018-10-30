@@ -30,18 +30,33 @@ class utility:
         os.chdir(rootDir)
         return compiled
 
-    def move_to_next_directory(self, assignment_dir):
+    # Return the uomid of current directory, return -1 if not in any of the directories
+    def get_uomid_of_current_dir(self):
         dir_name = '/ASSIGNMENTS/'
-        assignment_dir_list = next(os.walk(assignment_dir))[1] 
+        # Get the list of all students directory with uomid as directory name
+        # assignment_dir_list = next(os.walk(path))[1] 
         cwd = os.getcwd()
         uomid = cwd.find(dir_name)
+
+        if uomid != -1:
+            uomid_end = cwd[uomid+len(dir_name):].find('/')
+            uomid = cwd[uomid+len(dir_name):] if uomid_end == -1 else cwd[uomid+len(dir_name):uomid+len(dir_name)+uomid_end]
+            # dir_index = assignment_dir_list.index(uomid)
+        return uomid
+
+    def move_to_next_directory(self, assignment_dir):
+        # dir_name = '/ASSIGNMENTS/'
+        assignment_dir_list = next(os.walk(assignment_dir))[1] 
+        # cwd = os.getcwd()
+        # uomid = cwd.find(dir_name)
+        uomid = self.get_uomid_of_current_dir()
 
         # not in a student's assignment folder, go to the first folder
         if uomid == -1:
             os.chdir(assignment_dir_list[0])
         else:
-            uomid_end = cwd[uomid+len(dir_name):].find('/')
-            uomid = cwd[uomid+len(dir_name):] if uomid_end == -1 else cwd[uomid+len(dir_name):uomid+len(dir_name)+uomid_end]
+            # uomid_end = cwd[uomid+len(dir_name):].find('/')
+            # uomid = cwd[uomid+len(dir_name):] if uomid_end == -1 else cwd[uomid+len(dir_name):uomid+len(dir_name)+uomid_end]
             dir_index = assignment_dir_list.index(uomid)
             if dir_index == len(assignment_dir_list)-1:
                 print("No more directories available after")
@@ -51,17 +66,18 @@ class utility:
         pass
 
     def move_to_prev_directory(self, assignment_dir):
-        dir_name = '/ASSIGNMENTS/'
+        # dir_name = '/ASSIGNMENTS/'
         assignment_dir_list = next(os.walk(assignment_dir))[1] 
-        cwd = os.getcwd()
-        uomid = cwd.find(dir_name)
+        # cwd = os.getcwd()
+        # uomid = cwd.find(dir_name)
+        uomid = self.get_uomid_of_current_dir()
 
         # not in a student's assignment folder, go to the first folder
         if uomid == -1:
             os.chdir(assignment_dir_list[0])
         else:
-            uomid_end = cwd[uomid+len(dir_name):].find('/')
-            uomid = cwd[uomid+len(dir_name):] if uomid_end == -1 else cwd[uomid+len(dir_name):uomid+len(dir_name)+uomid_end]
+            # uomid_end = cwd[uomid+len(dir_name):].find('/')
+            # uomid = cwd[uomid+len(dir_name):] if uomid_end == -1 else cwd[uomid+len(dir_name):uomid+len(dir_name)+uomid_end]
             dir_index = assignment_dir_list.index(uomid)
             if dir_index == 0:
                 print("No more directories available before")
