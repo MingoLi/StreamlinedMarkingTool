@@ -4,6 +4,7 @@ import argparse
 from config_reader import config_reader
 from utility import utility
 from feedback import feedback
+from statistics import statistics
 import os
 
 
@@ -15,7 +16,8 @@ class Shell(cmd2.Cmd):
         self.cr = config_reader()
         self.utility = utility()
         self.feedback = feedback()
-        os.chdir('../ASSIGNMENTS')
+        self.statistics = statistics()
+        os.chdir('ASSIGNMENTS')
 
     # def do_loadaverage(self, line):
     #     with open('./text.txt') as fobj:
@@ -54,6 +56,7 @@ class Shell(cmd2.Cmd):
         self.utility.move_to_prev_directory(self.cr.get_assignemnts())
         print('cd: ' + os.getcwd())
         pass
+
 
 
     argparser_test = argparse.ArgumentParser(epilog='input unit test files are placed under UNIT TESTS folder, and the files contain their corresponding expeceted output should be named as [filename]_expected plus extension')
@@ -107,6 +110,27 @@ class Shell(cmd2.Cmd):
         """List all available feedback sentences"""
         self.feedback.print_all_rubric()
         pass
+
+    def do_feedbackHistory(self, args):
+        """Show all the feedbacks assigned to current student"""
+        self.feedback.get_curr_feedback()
+        pass
+
+    def do_check(self, args):
+        """List all students who do not have any feedback assigned"""
+        self.feedback.check_missing_student()
+        pass
+
+    generate_csv_parser = argparse.ArgumentParser()
+    generate_csv_parser.add_argument('-f', '--force', action='store_true', help="""ignore the warning and force generating the csv file.\n 
+    Note: by doing this, the system will consider that the students who have no feedback associated as full mark""")
+    @cmd2.with_argparser(generate_csv_parser)
+    def do_generate_csv(self, args):
+        if args.force:
+            self.statistics.generate_csv(True)
+        else:
+            self.statistics.generate_csv(False)
+        pass
     
     
 
@@ -139,6 +163,9 @@ class Shell(cmd2.Cmd):
     do_make = do_compile
     do_fd = do_feedback
     do_fdlist = do_feedbacklist
+    do_fdhis = do_feedbackHistory
+    do_quit = do_exit
+    do_gencsv = do_generate_csv
 
 
 if __name__ == '__main__':

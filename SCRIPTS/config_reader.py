@@ -7,7 +7,7 @@ class config_reader:
 
     def __init__(self):
         # Load the configuration file
-        with open("../CONFIGURATION/config.ini") as f:
+        with open("CONFIGURATION/config.ini") as f:
             config = f.read()
             self.parser = ConfigParser(interpolation=ExtendedInterpolation())
             self.parser.readfp(io.BytesIO(config))
@@ -23,6 +23,12 @@ class config_reader:
 
     def get_feedback(self):
         return self.parser.get('paths', 'feedback_dir')
+
+    def get_grades(self):
+        return self.parser.get('paths', 'grades_dir')
+    
+    def get_courseInfo(self):
+        return self.parser['courseInfo']
     
 
     def get_file_location(self, location):

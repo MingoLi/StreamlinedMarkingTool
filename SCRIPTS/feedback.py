@@ -1,6 +1,7 @@
 from config_reader import config_reader
 from configparser import ConfigParser, ExtendedInterpolation
 import io
+import os
 from utility import utility
 
 class feedback:
@@ -79,6 +80,82 @@ class feedback:
             fd_log_update.close()        
         pass
 
+
+    def get_curr_feedback(self):
+        uomid = self.utility.get_uomid_of_current_dir()
+        if uomid == -1:
+            print 'Error: You have to be in a student directory'
+        else:
+            try:
+                log_path = self.feedback_dir + '/' + 'feedback.ini'
+                with open(log_path) as f:
+                    config = f.read()
+                    parser = ConfigParser(interpolation=ExtendedInterpolation())
+                    parser.readfp(io.BytesIO(config))
+                    
+                    for option in parser[uomid]:
+                        print option + ' : ' + parser.get(uomid, option)
+            except:
+                print 'You currently have not assigned any feedback'
+        pass
+
+
+
+    # return the list of student id that has feedback associated
+    def get_student_list(self):
+        log_path = self.feedback_dir + '/' + 'feedback.ini'
+        student_list = []
+        try:
+            with open(log_path) as f:
+                config = f.read()
+                parser = ConfigParser(interpolation=ExtendedInterpolation())
+                parser.readfp(io.BytesIO(config))
+                
+                for section in parser.sections():
+                    student_list.append(section)
+        except:
+            print 'You currently have not assigned any feedback'
+        
+        return student_list
+
+    def check_missing_student(self):
+        all_student_list = next(os.walk(self.cr.get_assignemnts()))[1]
+        student_with_feedback = self.get_student_list()
+
+        missing_student = list(set(all_student_list) - set(student_with_feedback))
+        if len(missing_student) > 0:
+            print 'You have ' + str(len(missing_student)) + ' student(s) that do not have any feedback, please check:'
+            for s in missing_student:
+                print s
+        return len(missing_student)
+
+    # Get all student id with the mark deducted
+    def get_all_student_marks(self):
+        log_path = self.feedback_dir + '/' + 'feedback.ini'
+        all_student_list = next(os.walk(self.cr.get_assignemnts()))[1]
+        feedback_list = {}
+        try:
+            with open(log_path) as f:
+                config = f.read()
+                parser = ConfigParser(interpolation=ExtendedInterpolation())
+                parser.readfp(io.BytesIO(config))
+
+                for s in all_student_list:
+                    mark = 0
+                    if parser.has_section(s):
+                        for options in parser.options(s):
+                            mark += int(parser.get(s, options))
+                    feedback_list[s] = mark
+                
+                # for section in parser.sections():
+                #     mark = 0
+                #     for options in parser.options(section):
+                #         mark += int(parser.get(section, options))
+                #     feedback_list[section] = mark
+        except:
+            print 'You currently have not assigned any feedback'
+        
+        return feedback_list
 
 # fd = feedback()
 # fd.print_sections()

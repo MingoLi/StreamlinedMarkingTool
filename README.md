@@ -2,8 +2,8 @@
 This project is looking to streamline the marking process by using Python on Linux. A command-line tool will be introduced, where the marker can view the student’s files, run the code, view the output. Unit tests will be supported and can be accessed from a configurable location. As a result, a CSV file will be produced listing the student’s marks, and other related information.
 
 # How to run
-- Install module `cmd2`
-Find `shell.py` in `SCRIPTS`, type `python shell.py` to start
+- Install module `cmd2`, type `./start.sh` to start (you may need to run `chmod +x start.sh` first)  
+- `quit` or `exit` to terminate
 - Linux commands are still available by adding `!` before the command, e.g. `!ls`
 - Frequently used commands can be executed without `!`, including `ls`, `cd`, `pwd`
 
@@ -30,10 +30,16 @@ Find `shell.py` in `SCRIPTS`, type `python shell.py` to start
 - Leave feedback to students using pre-define sentences. 
     - e,g. `fd <feedback> <mark deduction>`
     - `fdlist` to list all avaliable abbreviation for feedback sentences
+    - `check` command to check which student(s) do not have any feedback yet
+    - `fdhis` to show all the feedbacks assigned to a certain student, has to be used under a student's assignement direcotory
+- Add the support of starting the script from root directory
+- Statistic generation: add the support of generating the csv file including the grade of all student based on given feedback and mark deducted
+    - `gencsv` to generate the file and the file can be found under /GRADES/xxx.csv
+    - Note: for students who have no feedback being assigned will be considered as full mark when using flag `-f` or `--force`
+
 
 # Yet to be finished
 - Track the grading progress and be able to resume
-- grades statistics
 - Email notification
 
 # Open source used:  
