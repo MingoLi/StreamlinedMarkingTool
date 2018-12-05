@@ -32,16 +32,21 @@ This project is looking to streamline the marking process by using Python on Lin
     - `fdlist` to list all avaliable abbreviation for feedback sentences
     - `check` command to check which student(s) do not have any feedback yet
     - `fdhis` to show all the feedbacks assigned to a certain student, has to be used under a student's assignement direcotory
-- Add the support of starting the script from root directory
+- Add the support for starting the script from root directory
 - Statistic generation: add the support of generating the csv file including the grade of all student based on given feedback and mark deducted
     - `gencsv` to generate the file and the file can be found under /GRADES/xxx.csv
     - Note: for students who have no feedback being assigned will be considered as full mark when using flag `-f` or `--force`
+- Add Tab-completion for build-in commands (supported by `gnureadline`).
+- Add Email Notification
+    - `notify` will send each student an email include their feedback and mark gained
+    - using flag `-c` or `--check` will ONLY create the email body in txt file and store under EMAIL BACKUP folder and will NOT actully send it, and will NOT be logged.
 
 
 # Yet to be finished
 - Track the grading progress and be able to resume
-- Email notification
 
 # Open source used:  
 - cmd2    
 https://pypi.org/project/cmd2/  
+- gnureadline
+https://pypi.org/project/gnureadline/

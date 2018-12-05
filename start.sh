@@ -1,2 +1,2 @@
 #!/bin/sh
-python SCRIPTS/shell.py
+python3 SCRIPTS/shell.py

@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from configparser import ConfigParser, ExtendedInterpolation
 import io
 
@@ -7,10 +5,12 @@ class config_reader:
 
     def __init__(self):
         # Load the configuration file
-        with open("CONFIGURATION/config.ini") as f:
-            config = f.read()
-            self.parser = ConfigParser(interpolation=ExtendedInterpolation())
-            self.parser.readfp(io.BytesIO(config))
+        # with open("CONFIGURATION/config.ini") as f:
+        #     config = f.read()
+        #     self.parser = ConfigParser(interpolation=ExtendedInterpolation())
+        #     self.parser.readfp(io.BytesIO(config))
+        self.parser = ConfigParser(interpolation=ExtendedInterpolation())
+        self.parser.read('CONFIGURATION/config.ini')
 
     def get_assignemnts(self):
         return self.parser.get('paths', 'assignments_dir')
@@ -29,6 +29,15 @@ class config_reader:
     
     def get_courseInfo(self):
         return self.parser['courseInfo']
+
+    def get_email_settings(self):
+        return self.parser['email']
+
+    def get_email_log(self):
+        return self.parser.get('paths', 'email_log_dir')
+
+    def get_email_backup(self):
+        return self.parser.get('paths', 'email_backup_dir')
     
 
     def get_file_location(self, location):
@@ -46,6 +55,7 @@ class config_reader:
 
 
 # cr = config_reader()
+# cr.get_email_settings()
 # print(cr.get_assignemnts())
 
 # List all contents
@@ -62,3 +72,4 @@ class config_reader:
 # print(parser.get('paths', 'user_dir'))  # Just get the value
 # print(parser.get('paths', 'solution_dir'))
 # print(config.getboolean('other', 'use_anonymous'))  # You know the datatype?
+

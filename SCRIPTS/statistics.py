@@ -16,7 +16,7 @@ class statistics:
         if os.path.exists(log_path):
             missing = self.feedbeck.check_missing_student()
             if missing > 0 and not force:
-                print 'WARNING: use -f to force generating csv file'
+                print('WARNING: use -f to force generating csv file')
                 return
             
             grades_dir = self.cr.get_grades()
@@ -33,7 +33,7 @@ class statistics:
             f.close()
 
         else:
-            print 'feedback log not found'
+            print('feedback log not found')
         pass
 
 # s = statistics()

@@ -1,0 +1,14 @@
+Mark breakdown for COMP xxxx Assignment x
+=========================================
+
+General
+-------------
+
+one thread per cell is not achived in resultant matrix: -1
+incorrect result: -1
+no locks around all concurrent printfs: -1
+
+
+------
+
+Grand total = 47/50

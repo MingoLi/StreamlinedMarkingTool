@@ -5,18 +5,21 @@ from config_reader import config_reader
 from utility import utility
 from feedback import feedback
 from statistics import statistics
+from email_sender import email_sender
 import os
 
 
 class Shell(cmd2.Cmd):
     prompt = "$ "
     editor = "code"
+    debug = "True"
     def __init__(self):
         cmd2.Cmd.__init__(self)
         self.cr = config_reader()
         self.utility = utility()
         self.feedback = feedback()
         self.statistics = statistics()
+        self.es = email_sender()
         os.chdir('ASSIGNMENTS')
 
     # def do_loadaverage(self, line):
@@ -101,9 +104,11 @@ class Shell(cmd2.Cmd):
     @cmd2.with_argparser(argparser_feedback)
     def do_feedback(self, args):
         """Leave feedback to current student. Feedbacks are stored in FEEDBACK/feedback.ini, and will be used to generate email template"""
-        print args.feedback + ': ' + args.deduct
+        print(args.feedback + ': ' + args.deduct)
         self.feedback.leave_feedback(args.feedback, args.deduct)
         pass
+
+    # TODO: support bonus
 
 
     def do_feedbacklist(self, args):
@@ -130,6 +135,47 @@ class Shell(cmd2.Cmd):
             self.statistics.generate_csv(True)
         else:
             self.statistics.generate_csv(False)
+        pass
+
+    send_email_parser = argparse.ArgumentParser()
+    send_email_parser.add_argument('-c', '--check', action='store_true', help="""This will ONLY create txt file under EMAIL BACKUP folder and will NOT
+    actully send it, and will NOT be logged""")
+    @cmd2.with_argparser(send_email_parser)
+    def do_send_email(self, args):
+        all_student_list = next(os.walk(self.cr.get_assignemnts()))[1]
+        l = len(all_student_list)
+
+        if not args.check:
+            if not self.utility.query_yes_no('Are you sure you want to send emails to ' + str(l) + ' students? [y/n]'):
+                return
+
+        self.utility.printProgressBar(0, l, prefix = '', suffix = 'Complete', length = 50)
+        for i, s in enumerate(all_student_list):
+            prefix = 'sending to ' + s + ':'
+            if not args.check:
+                if not self.es.send_email(s):
+                    print("Stop sending email")
+                    break
+            else:
+                if not self.es.send_email_fake(s):
+                    print("Stop sending email")
+                    break
+            self.utility.printProgressBar(i + 1, l, prefix = prefix, suffix = 'Complete', length = 50)
+
+
+        # A List of Items
+        # items = list(range(0, 5))
+        # l = len(items)
+
+        # Initial call to print 0% progress
+        # self.utility.printProgressBar(0, l, prefix = 'Progress:', suffix = 'Complete', length = 50)
+        # for i, item in enumerate(items):
+        #     # Do stuff...
+        #     sleep(1)
+        #     prefix = 'sending to ' + str(i)
+        #     # Update Progress Bar
+        #     self.utility.printProgressBar(i + 1, l, prefix = prefix, suffix = 'Complete', length = 50)
+
         pass
     
     
@@ -158,6 +204,8 @@ class Shell(cmd2.Cmd):
             argv[0] = './' + argv[0]
         call(argv)
 
+    # TODO intergrate late submit
+
     # short cut for commands
     do_pd = do_print_dir
     do_make = do_compile
@@ -166,6 +214,7 @@ class Shell(cmd2.Cmd):
     do_fdhis = do_feedbackHistory
     do_quit = do_exit
     do_gencsv = do_generate_csv
+    do_notify = do_send_email
 
 
 if __name__ == '__main__':

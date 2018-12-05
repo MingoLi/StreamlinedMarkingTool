@@ -100,7 +100,7 @@ class utility:
                 # diff = difflib.unified_diff(out, f.read().splitlines())
                 d = difflib.Differ()
                 diff = d.compare(out, f.read().splitlines())
-        print '\n'.join(diff)
+        print('\n'.join(diff))
 
 
     def parse_test_filename(self, filename):
@@ -110,6 +110,43 @@ class utility:
             return_name = filename + '_expected'
         
         return return_name
+
+    # Print iterations progress
+    def printProgressBar (self, iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█'):
+        """
+        Call in a loop to create terminal progress bar
+        @params:
+            iteration   - Required  : current iteration (Int)
+            total       - Required  : total iterations (Int)
+            prefix      - Optional  : prefix string (Str)
+            suffix      - Optional  : suffix string (Str)
+            decimals    - Optional  : positive number of decimals in percent complete (Int)
+            length      - Optional  : character length of bar (Int)
+            fill        - Optional  : bar fill character (Str)
+        """
+        percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
+        filledLength = int(length * iteration // total)
+        bar = fill * filledLength + '-' * (length - filledLength)
+        print('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end = '\r')
+        # Print New Line on Complete
+        if iteration == total: 
+            print()
+
+    def query_yes_no(self, question):
+        print(question)
+        # raw_input returns the empty string for "enter"
+        yes = {'yes','y', 'ye', ''}
+        no = {'no','n'}
+
+        while True:
+            choice = input().lower()
+            if choice in yes:
+                return True
+            elif choice in no:
+                return False
+            else:
+                print("Please respond with 'yes' or 'no'")
+        pass
 
 
 
