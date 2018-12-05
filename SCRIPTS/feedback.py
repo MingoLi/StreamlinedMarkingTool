@@ -150,8 +150,7 @@ class feedback:
             print('You have ' + str(len(missing_student)) + ' student(s) that do not have any feedback, please check:')
             for s in missing_student:
                 print(s)
-        else:
-            print('All students have got some feedback')
+                
         return len(missing_student)
 
     # Get all student id with the mark deducted
@@ -182,6 +181,43 @@ class feedback:
             print('You currently have not assigned any feedback')
         
         return feedback_list
+
+    def give_bonus(self, bonus, addition):
+        uomid = self.utility.get_uomid_of_current_dir()
+        if uomid == -1:
+            print('Error: You have to be in a student directory')
+
+        else:
+            # Find pre-defined full feedback sentence
+            bonus = self.feedback_list.get(bonus)
+            if bonus is None:
+                print('Error: give bonus sentence not defined in config')
+                return
+
+            log_path = self.feedback_dir + '/' + self.FEEDBACK_LOG_NAME
+        
+            # fd_log = open(log_path, 'r+')
+            # config = fd_log.read()
+            parser = ConfigParser(interpolation=ExtendedInterpolation())
+            parser.read(log_path)
+            
+            if not parser.has_section(uomid):
+                parser.add_section(uomid)
+
+            if not parser.has_option(uomid, bonus):
+                parser.set(uomid, bonus, addition)
+                
+            else:
+                value = parser.get(uomid, bonus)
+                value = str(int(value) + int(addition))
+                parser.set(uomid, bonus, value)
+                
+            print('Bonus: %s \nMark added: %s' %(bonus, addition))
+            fd_log_update = open(log_path, 'w+')
+            parser.write(fd_log_update)
+            # fd_log.close()
+            fd_log_update.close()        
+        pass
 
 # fd = feedback()
 # fd.print_sections()

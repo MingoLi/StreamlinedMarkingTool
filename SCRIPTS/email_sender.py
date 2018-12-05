@@ -32,31 +32,6 @@ class email_sender:
             return False
 
         return True
- 
-    def send_email_not_in_use(self):
-        # fromaddr = self.email_config.get('sendfrom')
-        fromaddr = 'lim34521@myumanitoba.ca'
-        toaddr = "liminghao0613@gmail.com"
-        
-        msg = MIMEMultipart()
-        
-        msg['From'] = fromaddr
-        msg['To'] = toaddr
-        # msg['Subject'] = self.email_config.get('subject')
-        msg['Subject'] = 'Test msg'
-        
-        body = "TEXT YOU WANT TO SEND"
-        
-        msg.attach(MIMEText(body, 'plain'))
-        
-        # TODO: handle time out
-        server = smtplib.SMTP('smtp.office365.com', 587)
-        server.starttls()
-        server.login(fromaddr, "Aa970613..")
-        text = msg.as_string()
-        server.sendmail(fromaddr, toaddr, text)
-        server.quit()
-        pass
 
     def construct_email_body(self, to):
         fd_list = self.feedback.get_feedback_of(to)

@@ -30,8 +30,9 @@ This project is looking to streamline the marking process by using Python on Lin
 - Leave feedback to students using pre-define sentences. 
     - e,g. `fd <feedback> <mark deduction>`
     - `fdlist` to list all avaliable abbreviation for feedback sentences
-    - `check` command to check which student(s) do not have any feedback yet
+    - `check` command to check which student(s) do not have any feedback yet, print nothing if no one is left
     - `fdhis` to show all the feedbacks assigned to a certain student, has to be used under a student's assignement direcotory
+- `bonus` added to support giving bonus mark, same usage as leaving feedback
 - Add the support for starting the script from root directory
 - Statistic generation: add the support of generating the csv file including the grade of all student based on given feedback and mark deducted
     - `gencsv` to generate the file and the file can be found under /GRADES/xxx.csv

@@ -109,7 +109,15 @@ class Shell(cmd2.Cmd):
         pass
 
     # TODO: support bonus
-
+    argparser_bonus = argparse.ArgumentParser()
+    argparser_bonus.add_argument('bonus', help='use bonus abbreviations defined in config file')
+    argparser_bonus.add_argument('add', help='marks to be added')
+    @cmd2.with_argparser(argparser_bonus)
+    def do_bonus(self, args):
+        """Give bonus to current student. Bonus are stored in FEEDBACK/feedback.ini, and will be used to generate email template"""
+        print(args.bonus + ': ' + args.add)
+        self.feedback.give_bonus(args.bonus, args.add)
+        pass
 
     def do_feedbacklist(self, args):
         """List all available feedback sentences"""
@@ -142,6 +150,7 @@ class Shell(cmd2.Cmd):
     actully send it, and will NOT be logged""")
     @cmd2.with_argparser(send_email_parser)
     def do_send_email(self, args):
+        """Only call this when you done all the marking. This command will send each student a email inluding the feedbacks and marks they gained"""
         all_student_list = next(os.walk(self.cr.get_assignemnts()))[1]
         l = len(all_student_list)
 
