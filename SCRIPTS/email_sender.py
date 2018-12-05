@@ -81,8 +81,6 @@ class email_sender:
 
     def log_write(self, to):
         log_path = self.email_log_dir + '/' + self.EMAIL_LOG_NAME
-
-        
         parser = ConfigParser(interpolation=ExtendedInterpolation())
         parser.read(log_path)
 
@@ -107,29 +105,47 @@ class email_sender:
         self.construct_email_body(to)
         return True
 
+    # Check whether this email has been sent 
+    # True -> already sent
+    def check_duplicate_from_log(self, to):
+        log_path = self.email_log_dir + '/' + self.EMAIL_LOG_NAME
+        parser = ConfigParser(interpolation=ExtendedInterpolation())
+        parser.read(log_path)
+        
+        if parser.has_section(to):
+            return True
+
+        return False
+
+
     def send_email(self, to):
         if not self.verify_email_settings():
             return False
 
-        msg = MIMEText(self.construct_email_body(to))
+        if not self.check_duplicate_from_log(to):
+            msg = MIMEText(self.construct_email_body(to))
 
-        fromaddr = self.email_config.get('sendfrom')
-        toaddr = to + '@' + self.email_config.get('domain')
-        msg['Subject'] = self.email_config.get('subject')
-        msg['From'] = fromaddr
-        msg['To'] = toaddr
+            fromaddr = self.email_config.get('sendfrom')
+            toaddr = to + '@' + self.email_config.get('domain')
+            msg['Subject'] = self.email_config.get('subject')
+            msg['From'] = fromaddr
+            msg['To'] = toaddr
 
-        smtp = self.email_config.get('smtp')
-        port = self.email_config.get('port')
-        password = self.email_config.get('password')
+            smtp = self.email_config.get('smtp')
+            port = self.email_config.get('port')
+            password = self.email_config.get('password')
 
-        # Send the message via our own SMTP server.
-        server = smtplib.SMTP(smtp, port)
-        server.starttls()
-        server.login(fromaddr, password)
-        server.send_message(msg)
-        server.quit()
+            # Send the message via our own SMTP server.
+            try:
+                server = smtplib.SMTP(smtp, port)
+                server.starttls()
+                server.login(fromaddr, password)
+                server.send_message(msg)
+                server.quit()
 
-        self.log_write(to)
+                self.log_write(to)
+            except:
+                print("Timeout, please check smtp settings and try again mannualy")
+
         return True
 
