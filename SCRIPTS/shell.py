@@ -22,26 +22,20 @@ class Shell(cmd2.Cmd):
         self.statistics = statistics()
         self.es = email_sender()
         self.late_submit_checker = late_submit_checker()
-        os.chdir('ASSIGNMENTS')
+        os.chdir('ASSIGNMENTS')    
 
-    # def do_loadaverage(self, line):
-    #     with open('./text.txt') as fobj:
-    #         data = fobj.read()
-    #     print(data)
-    
+    # def do_print_dir(self, location):
+    #     """Print directory path.
+    # Usage:
+    #     pd <dir_name>
 
-    def do_print_dir(self, location):
-        """Print directory path.
-    Usage:
-        pd <dir_name>
-
-        dir_name:
-            - ASSIGNMENTS
-            - EMAILS
-            - ...
-        """
-        print(self.cr.get_file_location(location))
-        pass
+    #     dir_name:
+    #         - ASSIGNMENTS
+    #         - EMAILS
+    #         - ...
+    #     """
+    #     print(self.cr.get_file_location(location))
+    #     pass
 
     def do_next(self, *args):
         """Move to the next student's assignment folder
@@ -224,9 +218,8 @@ class Shell(cmd2.Cmd):
             argv[0] = './' + argv[0]
         call(argv)
 
-
     # short cut for commands
-    do_pd = do_print_dir
+    # do_pd = do_print_dir
     do_make = do_compile
     do_fd = do_feedback
     do_fdlist = do_feedbacklist

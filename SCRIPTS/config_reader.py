@@ -42,13 +42,13 @@ class config_reader:
     def get_late_submit_penalty(self):
         return self.parser.get('deadlines', 'penalty')
 
-    def get_file_location(self, location):
-        switcher = {
-            'assignments':self.get_assignemnts(),
-            'unit tests':self.get_unit_test(),
-        }
-        # print(switcher.get(location))
-        return switcher.get(location)
+    # def get_file_location(self, location):
+    #     switcher = {
+    #         'assignments':self.get_assignemnts(),
+    #         'unit tests':self.get_unit_test(),
+    #     }
+    #     # print(switcher.get(location))
+    #     return switcher.get(location)
         
 
     def get_deadline(self):

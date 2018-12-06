@@ -108,8 +108,11 @@ class utility:
         import subprocess, difflib
         expected = self.parse_test_filename(testfile)
         out = subprocess.check_output([exe, testfile])
+        out = out.decode('utf-8')
         out = out.splitlines() 
+
         with open(expected) as f:
+            # print(f.read().splitlines())
             
             if context:
                 diff = difflib.context_diff(out, f.read().splitlines())
@@ -118,8 +121,11 @@ class utility:
                 # diff = difflib.unified_diff(out, f.read().splitlines())
                 d = difflib.Differ()
                 diff = d.compare(out, f.read().splitlines())
+        # output = "\n".encode('ascii')
+        # print(str('\n').join(diff))
+        # diff = list(diff)
         print('\n'.join(diff))
-
+        pass
 
     def parse_test_filename(self, filename):
         if filename.endswith('.txt'):
