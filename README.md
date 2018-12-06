@@ -22,6 +22,7 @@ This project is looking to streamline the marking process by using Python on Lin
     - `make` will search for makefile and compile accordingly, more info in `help make`
     - `-r` is supported to compile the sub-directory recursively
 - `next` and `prev` helps you navigate between student's assignment folder
+    - use `resume` to quickly go back to the place you stopped last time
 - Run executable through command `run`
     - e.g. `run ./a.out`
 - Unit test with given input file and expected output. 
@@ -41,10 +42,6 @@ This project is looking to streamline the marking process by using Python on Lin
 - Add Email Notification
     - `notify` will send each student an email include their feedback and mark gained
     - using flag `-c` or `--check` will ONLY create the email body in txt file and store under EMAIL BACKUP folder and will NOT actully send it, and will NOT be logged.
-
-
-# Yet to be finished
-- Track the grading progress and be able to resume
 
 # Open source used:  
 - cmd2    

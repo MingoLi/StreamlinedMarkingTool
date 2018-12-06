@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # from config_reader import config_reader
 import os
+import math
 
 class utility:
 
@@ -84,6 +85,23 @@ class utility:
                 os.chdir(assignment_dir)
             else:
                 os.chdir(assignment_dir + '/' + assignment_dir_list[dir_index-1])
+        pass
+
+    def resume(self, assignment_dir, fd):
+        fdlist = fd.get_student_list()
+        if len(fdlist) > 0:
+            last = fdlist[-1]
+            all_student_list = next(os.walk(assignment_dir))[1]
+            last_index = all_student_list.index(last)
+            
+
+            ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(math.floor(n/10)%10!=1)*(n%10<4)*n%10::4])
+            print("The record says you were working on student %s last time, the %s in the directory." %(last, ordinal(last_index+1)))
+            if self.query_yes_no("Do you want to jump there? [y/n]"):
+                os.chdir(assignment_dir + '/' + all_student_list[last_index])
+
+        else:
+            print("You haven't done any work yet")
         pass
 
     def unit_test(self, exe, testfile, context):

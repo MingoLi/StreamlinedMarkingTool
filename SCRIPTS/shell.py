@@ -60,6 +60,11 @@ class Shell(cmd2.Cmd):
         print('cd: ' + os.getcwd())
         pass
 
+    def do_resume(self, args):
+        """Lead you to the directory you were working on last time"""
+        self.utility.resume(self.cr.get_assignemnts(), self.feedback)
+        print(os.getcwd())
+        pass
 
 
     argparser_test = argparse.ArgumentParser(epilog='input unit test files are placed under UNIT TESTS folder, and the files contain their corresponding expeceted output should be named as [filename]_expected plus extension')
@@ -108,7 +113,6 @@ class Shell(cmd2.Cmd):
         self.feedback.leave_feedback(args.feedback, args.deduct)
         pass
 
-    # TODO: support bonus
     argparser_bonus = argparse.ArgumentParser()
     argparser_bonus.add_argument('bonus', help='use bonus abbreviations defined in config file')
     argparser_bonus.add_argument('add', help='marks to be added')
@@ -150,7 +154,8 @@ class Shell(cmd2.Cmd):
     actully send it, and will NOT be logged""")
     @cmd2.with_argparser(send_email_parser)
     def do_send_email(self, args):
-        """Only call this when you done all the marking. This command will send each student a email inluding the feedbacks and marks they gained"""
+        """Only call this when you done all the marking. This command will send each student a email including the feedbacks and marks they gained. Send log can be found 
+        under LOG/email_log.ini, and one copy of each email being sent will be saved under EMAIL BACKUP"""
         all_student_list = next(os.walk(self.cr.get_assignemnts()))[1]
         l = len(all_student_list)
 
@@ -224,6 +229,8 @@ class Shell(cmd2.Cmd):
     do_quit = do_exit
     do_gencsv = do_generate_csv
     do_notify = do_send_email
+
+    
 
 
 if __name__ == '__main__':
