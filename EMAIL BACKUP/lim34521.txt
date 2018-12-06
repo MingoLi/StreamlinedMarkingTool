@@ -7,8 +7,9 @@ General
 one thread per cell is not achived in resultant matrix: -1
 incorrect result: -1
 no locks around all concurrent printfs: -1
+submitted within the original deadline: 1
 
 
 ------
 
-Grand total = 47/50
+Grand total = 48/50

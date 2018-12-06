@@ -6,6 +6,7 @@ from email.mime.base import MIMEBase
 from email import encoders
 from config_reader import config_reader
 from feedback import feedback
+from late_submit import late_submit_checker
 import re
 import datetime
 
@@ -17,6 +18,8 @@ class email_sender:
         self.email_config = self.cr.get_email_settings()
         self.email_log_dir = self.cr.get_email_log()
         self.feedback = feedback()
+        self.late_submission_list = late_submit_checker().late_submitter_log()
+        self.late_penalty = int(self.cr.get_late_submit_penalty())
         
     def verify_email_settings(self):
         EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
@@ -44,6 +47,11 @@ class email_sender:
         for fd, mark in fd_list.items():
             body += fd + ': ' + mark + '\n'
             curr_mark += int(mark)
+
+        if to in self.late_submission_list:
+            body += "Late submission: " + str(self.late_penalty)
+            curr_mark += self.late_penalty
+        
         body += '\n\n------\n\n'
         body += 'Grand total = ' + str(curr_mark) + '/' + str(full_mark)
         

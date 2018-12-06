@@ -1,5 +1,6 @@
 from config_reader import config_reader
 from feedback import feedback
+from late_submit import late_submit_checker
 import os.path
 
 class statistics:
@@ -8,6 +9,8 @@ class statistics:
         self.cr = config_reader()
         self.feedback_dir = self.cr.get_feedback()
         self.feedbeck = feedback()
+        self.late_submission_list = late_submit_checker().late_submitter_log()
+        self.late_penalty = int(self.cr.get_late_submit_penalty())
         
     def generate_csv(self, force):
         log_path = self.feedback_dir + '/' + 'feedback.ini'
@@ -25,6 +28,9 @@ class statistics:
 
             full_mark = int(self.cr.get_rubrics().get('fullmark'))
             feedback_list = self.feedbeck.get_all_student_marks()
+
+            for i in self.late_submission_list:
+                feedback_list[i] = str(int(feedback_list[i]) + self.late_penalty)
 
             f = open(csv_file,"w+")
             f.write('student id, mark\n')

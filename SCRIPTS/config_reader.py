@@ -39,6 +39,8 @@ class config_reader:
     def get_email_backup(self):
         return self.parser.get('paths', 'email_backup_dir')
     
+    def get_late_submit_penalty(self):
+        return self.parser.get('deadlines', 'penalty')
 
     def get_file_location(self, location):
         switcher = {

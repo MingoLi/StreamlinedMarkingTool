@@ -45,5 +45,6 @@ class late_submit_checker:
         
 
 
-c1 = late_submit_checker()
-print(c1.read_handinlog())
+# c1 = late_submit_checker()
+# print(c1.read_handinlog())
+# print(c1.late_submitter_log())

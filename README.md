@@ -1,5 +1,5 @@
 # StreamlinedMarkingTool
-This project is looking to streamline the marking process by using Python on Linux. A command-line tool will be introduced, where the marker can view the student’s files, run the code, view the output. Unit tests will be supported and can be accessed from a configurable location. As a result, a CSV file will be produced listing the student’s marks, and other related information.
+This project is looking to streamline the marking process by using Python on Linux. A command-line tool will be introduced, where the marker can view the student’s files, run the code, view the output. Unit tests will be supported and can be accessed from a configurable location. As a result, a CSV file will be produced listing the student’s marks, and other related information. An notification email will be sent to each student including the feedback and the final mark they gained.
 
 # How to run
 - Install module `cmd2`, type `./start.sh` to start (you may need to run `chmod +x start.sh` first)  
@@ -8,14 +8,20 @@ This project is looking to streamline the marking process by using Python on Lin
 - Frequently used commands can be executed without `!`, including `ls`, `cd`, `pwd`
 
 # Function achieved
+
+## General
 - Configuration reader
     - All configurations integrated into a single file
     - Can be read from `class config_reader`
 - Use costum editor by running `set editor <your editor>`, or change it with `editor = 'vim'` in shell.py
     - including `vim`, `code` ..., visual studio code by default
     - use editor with command `edit file.txt`...
+
+## Directory Navigation
+
 - Late submit check
     - Will automatically generate a dictionary `<id, submition date>` object based on the `HANDIN_LOG`
+    - `list_late_submit` to check exact id and submission time
 - `Help` for commands
     - shortcuts: `?<cmd_name>`, e.g. `?pd`
 - Automate compilation: if a makefile is contained in assignment folder, `make` can be used to compile the source code
@@ -40,7 +46,7 @@ This project is looking to streamline the marking process by using Python on Lin
     - Note: for students who have no feedback being assigned will be considered as full mark when using flag `-f` or `--force`
 - Add Tab-completion for build-in commands (supported by `gnureadline`).
 - Add Email Notification
-    - `notify` will send each student an email include their feedback and mark gained
+    - `send_email` or `notify` will send each student an email include their feedback and mark gained
     - using flag `-c` or `--check` will ONLY create the email body in txt file and store under EMAIL BACKUP folder and will NOT actully send it, and will NOT be logged.
 
 # Open source used:  

@@ -1,0 +1,14 @@
+Mark breakdown for COMP xxxx Assignment x
+=========================================
+
+General
+-------------
+
+one thread per cell is not achived in resultant matrix: -5
+threads not joined properly: -4
+avoid unnecessary blank lines in your code: -2
+Late submission: -5
+
+------
+
+Grand total = 34/50

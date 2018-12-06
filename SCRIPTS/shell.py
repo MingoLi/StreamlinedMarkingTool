@@ -6,6 +6,7 @@ from utility import utility
 from feedback import feedback
 from statistics import statistics
 from email_sender import email_sender
+from late_submit import late_submit_checker
 import os
 
 
@@ -20,6 +21,7 @@ class Shell(cmd2.Cmd):
         self.feedback = feedback()
         self.statistics = statistics()
         self.es = email_sender()
+        self.late_submit_checker = late_submit_checker()
         os.chdir('ASSIGNMENTS')
 
     # def do_loadaverage(self, line):
@@ -193,6 +195,10 @@ class Shell(cmd2.Cmd):
         pass
     
     
+    def do_list_late_submit(self, args):
+        print(self.late_submit_checker.late_submitter_log())
+        pass
+
 
     def do_ls(self, path):
         os.system('ls ' + path)
@@ -218,7 +224,6 @@ class Shell(cmd2.Cmd):
             argv[0] = './' + argv[0]
         call(argv)
 
-    # TODO intergrate late submit
 
     # short cut for commands
     do_pd = do_print_dir
@@ -229,9 +234,6 @@ class Shell(cmd2.Cmd):
     do_quit = do_exit
     do_gencsv = do_generate_csv
     do_notify = do_send_email
-
-    
-
 
 if __name__ == '__main__':
     app = Shell()
