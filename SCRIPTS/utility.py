@@ -8,9 +8,6 @@ class utility:
     # Traverse the student's directory and see if there is makefile
     def compile_through_makefile(self, path, recursive):
         compiled = False
-        # cr = config_reader()
-        # assignment_dir = cr.get_assignemnts()
-        # student_dir = assignment_dir + "/" + uomid
         rootDir = path 
         if recursive:
             for dirName, subdirList, fileList in os.walk(rootDir):
@@ -35,29 +32,22 @@ class utility:
     def get_uomid_of_current_dir(self):
         dir_name = '/ASSIGNMENTS/'
         # Get the list of all students directory with uomid as directory name
-        # assignment_dir_list = next(os.walk(path))[1] 
         cwd = os.getcwd()
         uomid = cwd.find(dir_name)
 
         if uomid != -1:
             uomid_end = cwd[uomid+len(dir_name):].find('/')
             uomid = cwd[uomid+len(dir_name):] if uomid_end == -1 else cwd[uomid+len(dir_name):uomid+len(dir_name)+uomid_end]
-            # dir_index = assignment_dir_list.index(uomid)
         return uomid
 
     def move_to_next_directory(self, assignment_dir):
-        # dir_name = '/ASSIGNMENTS/'
         assignment_dir_list = next(os.walk(assignment_dir))[1] 
-        # cwd = os.getcwd()
-        # uomid = cwd.find(dir_name)
         uomid = self.get_uomid_of_current_dir()
 
         # not in a student's assignment folder, go to the first folder
         if uomid == -1:
             os.chdir(assignment_dir_list[0])
         else:
-            # uomid_end = cwd[uomid+len(dir_name):].find('/')
-            # uomid = cwd[uomid+len(dir_name):] if uomid_end == -1 else cwd[uomid+len(dir_name):uomid+len(dir_name)+uomid_end]
             dir_index = assignment_dir_list.index(uomid)
             if dir_index == len(assignment_dir_list)-1:
                 print("No more directories available after")
@@ -67,18 +57,13 @@ class utility:
         pass
 
     def move_to_prev_directory(self, assignment_dir):
-        # dir_name = '/ASSIGNMENTS/'
         assignment_dir_list = next(os.walk(assignment_dir))[1] 
-        # cwd = os.getcwd()
-        # uomid = cwd.find(dir_name)
         uomid = self.get_uomid_of_current_dir()
 
         # not in a student's assignment folder, go to the first folder
         if uomid == -1:
             os.chdir(assignment_dir_list[0])
         else:
-            # uomid_end = cwd[uomid+len(dir_name):].find('/')
-            # uomid = cwd[uomid+len(dir_name):] if uomid_end == -1 else cwd[uomid+len(dir_name):uomid+len(dir_name)+uomid_end]
             dir_index = assignment_dir_list.index(uomid)
             if dir_index == 0:
                 print("No more directories available before")
@@ -112,18 +97,12 @@ class utility:
         out = out.splitlines() 
 
         with open(expected) as f:
-            # print(f.read().splitlines())
             
             if context:
                 diff = difflib.context_diff(out, f.read().splitlines())
             else:
-                # diff = difflib.ndiff(out, f.read().splitlines())
-                # diff = difflib.unified_diff(out, f.read().splitlines())
                 d = difflib.Differ()
                 diff = d.compare(out, f.read().splitlines())
-        # output = "\n".encode('ascii')
-        # print(str('\n').join(diff))
-        # diff = list(diff)
         print('\n'.join(diff))
         pass
 
@@ -171,24 +150,3 @@ class utility:
             else:
                 print("Please respond with 'yes' or 'no'")
         pass
-
-
-
-# u = utility()
-# u.run_executable()
-# u.compile_through_makefile('/Users/mingo/Desktop/StreamlinedMarkingTool/ASSIGNMENTS/lim34521', False)   
-# cr = config_reader()
-# assignment_dir = cr.get_assignemnts()
-# # cwd = os.getcwd()
-# dir_name = '/ASSIGNMENTS/'
-# cwd = '/Users/mingo/Desktop/StreamlinedMarkingTool/ASSIGNMENTS'
-# uomid = cwd.find(dir_name)
-# uomid_end = cwd[uomid+len(dir_name):].find('/')
-# uomid = cwd[uomid+len(dir_name):] if uomid_end == -1 else cwd[uomid+len(dir_name):uomid+len(dir_name)+uomid_end]  
-# # print(index)
-# print(uomid)
-# for dirName, subdirList, fileList in os.walk(cwd):
-#     print(next(subdirList))
-#     break
-# dr = next(os.walk(cwd))[1].index('lim34521')
-# print(dr)

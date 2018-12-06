@@ -14,31 +14,11 @@ class feedback:
         self.utility = utility()
 
     def print_all_rubric(self):
-        # for name, value in self.feedback_list:
-        #     print '  %s = %s' % (name, value)
         for option in self.feedback_list:
             value = self.feedback_list.get(option)
             print(option + ' : ' + value)
-            # value = value.split('@')
-            # print "%s: [ / %s] %s" %(option, value[1], value[0])
         pass
 
-    # def print_sections(self):
-    #     log_path = self.feedback_dir + '/' + 'feedback.ini'
-    #     with open(log_path) as fd_log:
-    #             config = fd_log.read()
-    #             parser = ConfigParser(interpolation=ExtendedInterpolation())
-    #             parser.readfp(io.BytesIO(config))
-                
-    #             sections = parser.sections()
-    #             for sec in sections:
-    #                 print sec
-
-    #             print parser['lim34522']
-
-    #     print 'DONE'
-
-    #     pass
 
     def leave_feedback(self, feedback, deduction):
         uomid = self.utility.get_uomid_of_current_dir()
@@ -58,8 +38,6 @@ class feedback:
 
             log_path = self.feedback_dir + '/' + self.FEEDBACK_LOG_NAME
         
-            # fd_log = open(log_path, 'r+')
-            # config = fd_log.read()
             parser = ConfigParser(interpolation=ExtendedInterpolation())
             parser.read(log_path)
             
@@ -77,7 +55,6 @@ class feedback:
             print('Feedback: %s \nMark deducted: %s' %(feedback, deduction))
             fd_log_update = open(log_path, 'w+')
             parser.write(fd_log_update)
-            # fd_log.close()
             fd_log_update.close()        
         pass
 
@@ -89,10 +66,8 @@ class feedback:
         else:
             try:
                 log_path = self.feedback_dir + '/' + self.FEEDBACK_LOG_NAME
-                # with open(log_path) as f:
-                #     config = f.read()
+              
                 parser = ConfigParser(interpolation=ExtendedInterpolation())
-                # parser.readfp(io.BytesIO(config))
                 parser.read(log_path)
                 
                 for option in parser[uomid]:
@@ -108,15 +83,12 @@ class feedback:
             try:
                 fd_list = {}
                 log_path = self.feedback_dir + '/' + self.FEEDBACK_LOG_NAME
-                # with open(log_path) as f:
-                    # config = f.read()
+
                 parser = ConfigParser(interpolation=ExtendedInterpolation())
-                # parser.readfp(io.BytesIO(config))
                 parser.read(log_path)
 
                 for option in parser[uomid]:
                     fd_list[option] = parser.get(uomid, option)
-                        # print(option + ' : ' + parser.get(uomid, option))
                 
                 return fd_list
             except:
@@ -128,10 +100,7 @@ class feedback:
         log_path = self.feedback_dir + '/' + self.FEEDBACK_LOG_NAME
         student_list = []
         try:
-            # with open(log_path) as f:
-            #     config = f.read()
             parser = ConfigParser(interpolation=ExtendedInterpolation())
-            # parser.readfp(io.BytesIO(config))
             parser.read(log_path)
             
             for section in parser.sections():
@@ -159,10 +128,7 @@ class feedback:
         all_student_list = next(os.walk(self.cr.get_assignemnts()))[1]
         feedback_list = {}
         try:
-            # with open(log_path) as f:
-            #     config = f.read()
             parser = ConfigParser(interpolation=ExtendedInterpolation())
-            # parser.readfp(io.BytesIO(config))
             parser.read(log_path)
 
             for s in all_student_list:
@@ -171,12 +137,6 @@ class feedback:
                     for options in parser.options(s):
                         mark += int(parser.get(s, options))
                 feedback_list[s] = mark
-                
-                # for section in parser.sections():
-                #     mark = 0
-                #     for options in parser.options(section):
-                #         mark += int(parser.get(section, options))
-                #     feedback_list[section] = mark
         except:
             print('You currently have not assigned any feedback')
         
@@ -196,8 +156,6 @@ class feedback:
 
             log_path = self.feedback_dir + '/' + self.FEEDBACK_LOG_NAME
         
-            # fd_log = open(log_path, 'r+')
-            # config = fd_log.read()
             parser = ConfigParser(interpolation=ExtendedInterpolation())
             parser.read(log_path)
             
@@ -215,11 +173,6 @@ class feedback:
             print('Bonus: %s \nMark added: %s' %(bonus, addition))
             fd_log_update = open(log_path, 'w+')
             parser.write(fd_log_update)
-            # fd_log.close()
             fd_log_update.close()        
         pass
-
-# fd = feedback()
-# fd.print_sections()
-# fd.print_rubric()
     

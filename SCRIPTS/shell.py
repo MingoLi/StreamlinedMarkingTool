@@ -98,8 +98,6 @@ class Shell(cmd2.Cmd):
 
 
     argparser_feedback = argparse.ArgumentParser()
-    # argparser_feedback.add_argument('-m', '--message', type=str, help='use customized feedback sentence')
-    # argparser_feedback.add_argument('-d', '--deduct', type=int, help='marks to be deducted')
     argparser_feedback.add_argument('feedback', help='use feedback abbreviations defined in config file')
     argparser_feedback.add_argument('deduct', help='marks to be deducted')
     @cmd2.with_argparser(argparser_feedback)
@@ -171,21 +169,6 @@ class Shell(cmd2.Cmd):
                     print("Stop sending email")
                     break
             self.utility.printProgressBar(i + 1, l, prefix = prefix, suffix = 'Complete', length = 50)
-
-
-        # A List of Items
-        # items = list(range(0, 5))
-        # l = len(items)
-
-        # Initial call to print 0% progress
-        # self.utility.printProgressBar(0, l, prefix = 'Progress:', suffix = 'Complete', length = 50)
-        # for i, item in enumerate(items):
-        #     # Do stuff...
-        #     sleep(1)
-        #     prefix = 'sending to ' + str(i)
-        #     # Update Progress Bar
-        #     self.utility.printProgressBar(i + 1, l, prefix = prefix, suffix = 'Complete', length = 50)
-
         pass
     
     
@@ -219,7 +202,6 @@ class Shell(cmd2.Cmd):
         call(argv)
 
     # short cut for commands
-    # do_pd = do_print_dir
     do_make = do_compile
     do_fd = do_feedback
     do_fdlist = do_feedbacklist

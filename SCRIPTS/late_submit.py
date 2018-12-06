@@ -18,7 +18,6 @@ class late_submit_checker:
         lines = [x.strip() for x in lines] 
 
         for line in lines:
-            # id_index = line.find(SUBMITTER)
             id_end = line.find('@')
             uom_id = line[len(SUBMITTER):id_end]
             date_index = line.find(TIME_STAMP)
@@ -39,12 +38,4 @@ class late_submit_checker:
             if date > deadline:
                 self.late_submitter[uom_id] = date
 
-        # for x in late_submitter.keys():
-        #     print(x)
         return self.late_submitter
-        
-
-
-# c1 = late_submit_checker()
-# print(c1.read_handinlog())
-# print(c1.late_submitter_log())

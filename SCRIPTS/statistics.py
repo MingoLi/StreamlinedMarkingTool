@@ -41,6 +41,3 @@ class statistics:
         else:
             print('feedback log not found')
         pass
-
-# s = statistics()
-# s.generate_csv()
